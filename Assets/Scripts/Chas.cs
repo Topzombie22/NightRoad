@@ -9,6 +9,18 @@ public class Chas : MonoBehaviour
     public AudioSource MonsterScream;
     public AudioSource MonsterRunning;
 
+    public Transform PatrolAreaOne;
+    public Transform PatrolAreaTwo;
+    public Transform PatrolAreaThree;
+
+    public bool WaitingForPatrol = false;
+    public int PatrolZone;
+    public int PatrolWaitTime;
+
+    public float distPatrolOne;
+    public float distPatrolTwo;
+    public float distPatrolThree;
+
     public Transform[] patrolPoints;
     public int destPoint = 0;
 
@@ -45,15 +57,14 @@ public class Chas : MonoBehaviour
 
         if (isMoving == true)
         {
-            MonsterRunning.Play();
+
         }
         else
         {
-            MonsterRunning.Stop();
+
         }
 
 
-        
         if (chasingPlayer == true)
         {
             agent.SetDestination(target.position);
@@ -62,6 +73,28 @@ public class Chas : MonoBehaviour
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
             GotoNextPoint();
     }
+
+    void FixedUpdate()
+    {
+        distPatrolOne = Vector3.Distance(target.position, PatrolAreaOne.position);
+        distPatrolTwo = Vector3.Distance(target.position, PatrolAreaTwo.position);
+        distPatrolThree = Vector3.Distance(target.position, PatrolAreaThree.position);
+
+        if (distPatrolOne < distPatrolTwo && distPatrolOne < distPatrolThree)
+        {
+            PatrolZone = 1;
+        }
+        if (distPatrolTwo < distPatrolOne && distPatrolTwo < distPatrolThree)
+        {
+            PatrolZone = 2;
+        }
+        if (distPatrolThree < distPatrolOne && distPatrolThree < distPatrolTwo)
+        {
+            PatrolZone = 3;
+        }
+    }
+
+
     // Update is called once per frame
     void OnTriggerStay(Collider other)
     {
@@ -85,41 +118,121 @@ public class Chas : MonoBehaviour
 
     void GotoNextPoint()
     {
-        if (patrolPoints.Length == 0)
-            return;
+        if (PatrolZone == 1)
+        {
+            agent.destination = patrolPoints[destPoint].position;
 
-        agent.destination = patrolPoints[destPoint].position;
+            if (agent.remainingDistance < 0.5f)
+            {
+                WaitingForPatrol = true;
+            }
 
-        destPoint = (destPoint + 1) % patrolPoints.Length;
+            if (WaitingForPatrol == true)
+            {
+                StartCoroutine(WaitForPatrol());
+                WaitingForPatrol = false;
+            }
+
+            destPoint = destPoint + 1;
+
+            if (destPoint >= 4)
+            {
+                destPoint = 0;
+            }
+        }
+
+        if (PatrolZone == 2)
+        {
+            agent.destination = patrolPoints[destPoint].position;
+
+            if (agent.remainingDistance < 0.5f)
+            {
+                WaitingForPatrol = true;
+            }
+
+            if (WaitingForPatrol == true)
+            {
+                StartCoroutine(WaitForPatrol());
+                WaitingForPatrol = false;
+            }
+
+            destPoint = destPoint + 1;
+
+            if (destPoint <= 4)
+            {
+                destPoint = 4;
+            }
+
+            if (destPoint >= 7)
+            {
+                destPoint = 4;
+            }
+        }
+        if (PatrolZone == 3)
+        {
+            agent.destination = patrolPoints[destPoint].position;
+
+            if (agent.remainingDistance < 0.5f)
+            {
+                WaitingForPatrol = true;
+            }
+
+            if (WaitingForPatrol == true)
+            {
+                StartCoroutine(WaitForPatrol());
+                WaitingForPatrol = false;
+            }
+
+            destPoint = destPoint + 1;
+
+            if (destPoint <= 8)
+            {
+                destPoint = 8;
+            }
+
+            if (destPoint >= 13)
+            {
+                destPoint = 8;
+            }
+        }
     }
+            IEnumerator Timer()
+        {
+            yield return new WaitForSeconds(4);
+            MonsterRunning.Play();
+            chasingPlayer = true;
+            agent.speed = 6.0f;
+        }
 
-    IEnumerator Timer()
-    {
-        yield return new WaitForSeconds(4);
-        chasingPlayer = true;
-        agent.speed = 6.0f;
-    }
+        IEnumerator Chasing()
+        {
+            yield return new WaitForSeconds(10);
+            chasingPlayer = false;
+            alerted = false;
+            MonsterRunning.Stop();
+        }
 
-    IEnumerator Chasing()
-    {
-        yield return new WaitForSeconds(10);
-        chasingPlayer = false;
-        alerted = false;
-    }
+        IEnumerator WaitingSound()
+        {
+            agent.speed = 0.0f;
+            yield return new WaitForSeconds(2);
+            agent.SetDestination(target.position);
+            agent.speed = 6.0f;
+            yield return new WaitForSeconds(2);
+            agent.speed = 0.0f;
+        }
 
-    IEnumerator WaitingSound()
-    {
-        agent.speed = 0.0f;
-        yield return new WaitForSeconds(2);
-        agent.SetDestination(target.position);
-        agent.speed = 6.0f;
-        yield return new WaitForSeconds(2);
-        agent.speed = 0.0f;
-    }
+        IEnumerator SpeedReset()
+        {
+            yield return new WaitForSeconds(2);
+            agent.speed = 0.0f;
+        }
 
-    IEnumerator SpeedReset()
-    {
-        yield return new WaitForSeconds(2);
-        agent.speed = 0.0f;
+        IEnumerator WaitForPatrol()
+        {
+            agent.speed = 0.0f;
+            PatrolWaitTime = Random.Range(3, 11);
+            yield return new WaitForSeconds(PatrolWaitTime);
+            agent.speed = 5.0f;
+        }
     }
-}
