@@ -219,7 +219,7 @@ public class Chas : MonoBehaviour
             agent.SetDestination(target.position);
             agent.speed = 6.0f;
             yield return new WaitForSeconds(2);
-            agent.speed = 0.0f;
+            WaitingForPatrol = false;
         }
 
         IEnumerator SpeedReset()
