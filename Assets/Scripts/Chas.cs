@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Chas : MonoBehaviour
 {
+    public Animation MonsterChase;
 
     public AudioSource MonsterScream;
     public AudioSource MonsterRunning;
@@ -197,12 +198,17 @@ public class Chas : MonoBehaviour
         }
     }
             IEnumerator Timer()
-        {
+            {
             yield return new WaitForSeconds(4);
+            MonsterChase.Play();
             MonsterRunning.Play();
             chasingPlayer = true;
+            agent.speed = 2.0f;
+            yield return new WaitForSeconds(1);
+            agent.speed = 4.0f;
+            yield return new WaitForSeconds(1);
             agent.speed = 6.0f;
-        }
+    }
 
         IEnumerator Chasing()
         {
