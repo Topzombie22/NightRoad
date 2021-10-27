@@ -9,7 +9,6 @@ public class KillState : MonoBehaviour
     public GameObject Endscrn;
     public GameObject Monster;
     public Animation Death;
-    public Camera cam;
     public GameObject player;
     public Transform head;
 
@@ -25,8 +24,8 @@ public class KillState : MonoBehaviour
         {
             agent.speed = 0.0f;
             Destroy(Monster.GetComponent<NavMeshAgent>());
+            player.transform.LookAt(head, Vector3.up);
             Destroy(player.GetComponent<PlayerMovement>());
-            cam.transform.LookAt(head);
             Death.Play("Kill Animation");
             StartCoroutine(WaitForDeath());
         }
