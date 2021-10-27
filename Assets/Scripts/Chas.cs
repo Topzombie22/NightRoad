@@ -203,11 +203,9 @@ public class Chas : MonoBehaviour
             MonsterChase.Play();
             MonsterRunning.Play();
             chasingPlayer = true;
-            agent.speed = 2.0f;
-            yield return new WaitForSeconds(1);
             agent.speed = 4.0f;
-            yield return new WaitForSeconds(1);
-            agent.speed = 6.0f;
+            yield return new WaitForSeconds(2);
+            agent.speed = 10.0f;
     }
 
         IEnumerator Chasing()

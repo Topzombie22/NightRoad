@@ -10,6 +10,7 @@ TagManager:
   - Collectables
   - End
   - Sound
+  - MonsterKill
   layers:
   - Default
   - TransparentFX
