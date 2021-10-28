@@ -22,8 +22,7 @@ public class KillState : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            agent.speed = 0.0f;
-            Destroy(Monster.GetComponent<NavMeshAgent>());
+            agent.isStopped = true;
             player.transform.LookAt(head, Vector3.up);
             Destroy(player.GetComponent<PlayerMovement>());
             Death.Play("Kill Animation");

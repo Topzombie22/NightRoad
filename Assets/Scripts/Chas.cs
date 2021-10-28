@@ -47,6 +47,7 @@ public class Chas : MonoBehaviour
 
     void Update()
     {
+
         if (agent.speed >= 0.01f)
         {
             isMoving = true;
@@ -218,9 +219,10 @@ public class Chas : MonoBehaviour
 
         IEnumerator WaitingSound()
         {
-            agent.speed = 0.0f;
+            agent.isStopped = true;
             yield return new WaitForSeconds(2);
             agent.SetDestination(target.position);
+            agent.isStopped = false;
             agent.speed = 6.0f;
             yield return new WaitForSeconds(2);
             WaitingForPatrol = false;
@@ -234,9 +236,10 @@ public class Chas : MonoBehaviour
 
         IEnumerator WaitForPatrol()
         {
-            agent.speed = 0.0f;
+            agent.isStopped = true;
             PatrolWaitTime = Random.Range(3, 11);
             yield return new WaitForSeconds(PatrolWaitTime);
+            agent.isStopped = false;
             agent.speed = 5.0f;
         }
     }
