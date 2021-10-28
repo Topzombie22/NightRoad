@@ -35,8 +35,9 @@ public class KillState : MonoBehaviour
     {
         yield return new WaitForSeconds(0.75f);
         Endscrn.SetActive(true);
-        Time.timeScale = 0;
-        
+        Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.None;
+
     }
 
 }
