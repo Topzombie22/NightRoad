@@ -5,10 +5,10 @@ using UnityEngine.AI;
 
 public class Chas : MonoBehaviour
 {
-    public Animation MonsterChase;
 
     public AudioSource MonsterScream;
     public AudioSource MonsterRunning;
+    public Animator anima;
 
     public Transform PatrolAreaOne;
     public Transform PatrolAreaTwo;
@@ -109,7 +109,7 @@ public class Chas : MonoBehaviour
         if (other.gameObject.tag == "Player" && alerted == false)
         {
 
-            agent.speed = 0.0f;
+            agent.isStopped = true;
             agent.SetDestination(target.position);
             MonsterScream.Play();
             StartCoroutine(Timer());
@@ -192,7 +192,7 @@ public class Chas : MonoBehaviour
                 destPoint = 8;
             }
 
-            if (destPoint >= 13)
+            if (destPoint >= 12)
             {
                 destPoint = 8;
             }
@@ -201,10 +201,10 @@ public class Chas : MonoBehaviour
             IEnumerator Timer()
             {
             yield return new WaitForSeconds(4);
-            MonsterChase.Play();
+            anima.SetBool("alerted", true);
+            agent.isStopped = false;
             MonsterRunning.Play();
             chasingPlayer = true;
-            agent.speed = 4.0f;
             yield return new WaitForSeconds(2);
             agent.speed = 10.0f;
     }
@@ -215,7 +215,8 @@ public class Chas : MonoBehaviour
             chasingPlayer = false;
             alerted = false;
             MonsterRunning.Stop();
-        }
+            anima.SetBool("alerted", false);
+    }
 
         IEnumerator WaitingSound()
         {

@@ -16329,9 +16329,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97aae059117556142a6b93d1b905ebc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MonsterChase: {fileID: 0}
   MonsterScream: {fileID: 1918417013}
   MonsterRunning: {fileID: 357477661}
+  anima: {fileID: 749026593}
   PatrolAreaOne: {fileID: 605086992}
   PatrolAreaTwo: {fileID: 895251168}
   PatrolAreaThree: {fileID: 952600088}
@@ -16369,7 +16369,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537171784}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 8, y: 4, z: 13}
@@ -17177,15 +17177,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7934641104263477753, guid: 171b5d5f8b2eb7e4db5328ad7b9b86b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0003559585
+      value: -0.00035618947
       objectReference: {fileID: 0}
     - target: {fileID: -7934641104263477753, guid: 171b5d5f8b2eb7e4db5328ad7b9b86b0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.8891373
+      value: 1.8893377
       objectReference: {fileID: 0}
     - target: {fileID: -7934641104263477753, guid: 171b5d5f8b2eb7e4db5328ad7b9b86b0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.000515759
+      value: -0.0005516112
       objectReference: {fileID: 0}
     - target: {fileID: -7934641104263477753, guid: 171b5d5f8b2eb7e4db5328ad7b9b86b0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -17857,27 +17857,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6309391115944632292, guid: 171b5d5f8b2eb7e4db5328ad7b9b86b0, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.49486333
+      value: 0.99804366
       objectReference: {fileID: 0}
     - target: {fileID: 6309391115944632292, guid: 171b5d5f8b2eb7e4db5328ad7b9b86b0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.046449095
+      value: -0.062449843
       objectReference: {fileID: 0}
     - target: {fileID: 6309391115944632292, guid: 171b5d5f8b2eb7e4db5328ad7b9b86b0, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.60491586
+      value: -0.00056923967
       objectReference: {fileID: 0}
     - target: {fileID: 6309391115944632292, guid: 171b5d5f8b2eb7e4db5328ad7b9b86b0, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.6221171
+      value: 0.0029372023
       objectReference: {fileID: 0}
     - target: {fileID: 6309391115944632292, guid: 171b5d5f8b2eb7e4db5328ad7b9b86b0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -1395.034
+      value: -7.161
       objectReference: {fileID: 0}
     - target: {fileID: 6309391115944632292, guid: 171b5d5f8b2eb7e4db5328ad7b9b86b0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -2948.105
+      value: -0.087
       objectReference: {fileID: 0}
     - target: {fileID: 6309391115944632292, guid: 171b5d5f8b2eb7e4db5328ad7b9b86b0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -18073,7 +18073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Endscrn: {fileID: 1084183360}
   Monster: {fileID: 537171784}
-  Death: {fileID: 0}
+  anima: {fileID: 749026593}
   player: {fileID: 2082892611}
   head: {fileID: 125191266}
 --- !u!95 &749026593
@@ -18470,7 +18470,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 2
   m_WholeNumbers: 0
-  m_Value: 0.9831603
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -30009,7 +30009,7 @@ MonoBehaviour:
   TintColor: {r: 1, g: 1, b: 1, a: 1}
   Hue: 0
   Saturation: 0
-  Brightness: 0.9831603
+  Brightness: 0
   Contrast: 0
   Sharpness: 0
 --- !u!20 &1633838117
