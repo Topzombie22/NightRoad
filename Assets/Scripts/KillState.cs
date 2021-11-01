@@ -10,7 +10,11 @@ public class KillState : MonoBehaviour
     public GameObject Monster;
     public Animator anima;
     public GameObject player;
+    public GameObject cam;
+    public Transform lookatplay;
     public Transform head;
+    private AudioSource[] allAudioSources;
+    public AudioSource Jumpscare;
 
     private void Start()
     {
@@ -22,9 +26,12 @@ public class KillState : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            agent.isStopped = true;
-            player.transform.LookAt(head, Vector3.up);
+            Jumpscare.Play();
+            Destroy(cam.GetComponent<MouseLook>());
             Destroy(player.GetComponent<PlayerMovement>());
+            agent.isStopped = true;
+            player.transform.LookAt(head);
+            Monster.transform.LookAt(lookatplay);
             anima.SetBool("caught", true);
             StartCoroutine(WaitForDeath());
         }
@@ -33,6 +40,12 @@ public class KillState : MonoBehaviour
     IEnumerator WaitForDeath()
     {
         yield return new WaitForSeconds(0.75f);
+        Destroy(Monster.GetComponent<Chas>());
+        allAudioSources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+        foreach (AudioSource audioS in allAudioSources)
+        {
+            audioS.Stop();
+        }
         Endscrn.SetActive(true);
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.None;
