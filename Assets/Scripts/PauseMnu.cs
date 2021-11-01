@@ -10,11 +10,17 @@ public class PauseMnu : MonoBehaviour
     public AudioSource rain;
     public GameObject optionScrn;
     public bool optionScrnOn = false;
+    public GameObject gameOver;
+
+    private void Start()
+    {
+        
+    }
 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && pauseScrnOn == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && pauseScrnOn == false && gameOver.GetComponent<KillState>().isdead == false)
         {
             Time.timeScale = 0;
             pauseScrn.SetActive(true);
@@ -35,7 +41,7 @@ public class PauseMnu : MonoBehaviour
 
     public void OpenMenu() 
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.Escape) && gameOver.GetComponent<KillState>().isdead == false)
         {
             Time.timeScale = 0;
             pauseScrn.SetActive(true);

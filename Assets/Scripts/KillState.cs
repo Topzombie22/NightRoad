@@ -15,6 +15,7 @@ public class KillState : MonoBehaviour
     public Transform head;
     private AudioSource[] allAudioSources;
     public AudioSource Jumpscare;
+    public bool isdead;
 
     private void Start()
     {
@@ -26,6 +27,7 @@ public class KillState : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            isdead = true;
             Jumpscare.Play();
             Destroy(cam.GetComponent<MouseLook>());
             Destroy(player.GetComponent<PlayerMovement>());
