@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class KillState : MonoBehaviour
 {
     NavMeshAgent agent;
+    public GameObject gameovr;
+    public GameObject mainmenuBut;
+    public GameObject restartBut;
     public GameObject Endscrn;
     public GameObject Monster;
     public Animator anima;
@@ -16,11 +20,21 @@ public class KillState : MonoBehaviour
     private AudioSource[] allAudioSources;
     public AudioSource Jumpscare;
     public bool isdead;
+    public bool hasresetcolor;
+    public bool isfaded;
 
     private void Start()
     {
         agent = Monster.GetComponent<NavMeshAgent>();
         
+    }
+
+    private void Update()
+    {
+        if (isfaded == true)
+        {
+            gameovr.GetComponent<RawImage>().color = Color.Lerp(Color.red, Color.white, Mathf.PingPong(Time.time, 1));
+        }
     }
 
     public void OnTriggerEnter(Collider other)
@@ -49,8 +63,19 @@ public class KillState : MonoBehaviour
             audioS.Stop();
         }
         Endscrn.SetActive(true);
+        mainmenuBut.GetComponent<RawImage>().CrossFadeAlpha(0, 0.0f, true);
+        restartBut.GetComponent<RawImage>().CrossFadeAlpha(0, 0.0f, true);
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.None;
+        gameovr.GetComponent<RawImage>().CrossFadeAlpha(0, 0.0f, true);
+        gameovr.GetComponent<RawImage>().CrossFadeAlpha(1, 2.75f, false);
+        yield return new WaitForSeconds(3.25f);
+        isfaded = true;
+        yield return new WaitForSeconds(0.5f);
+        mainmenuBut.GetComponent<RawImage>().CrossFadeAlpha(1, 3.0f, false);
+        restartBut.GetComponent<RawImage>().CrossFadeAlpha(1, 3.0f, false);
+        Cursor.lockState = CursorLockMode.None;
+
 
     }
 

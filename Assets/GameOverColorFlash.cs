@@ -19,5 +19,6 @@ public class GameOverColorFlash : MonoBehaviour
     {
         image.GetComponent<RawImage>().color = lerpedColor;
         lerpedColor = Color.Lerp(Color.white, Color.red, Mathf.PingPong(Time.time, 1));
+        image.GetComponent<RawImage>().CrossFadeAlpha(255, 1, false);
     }
 }
