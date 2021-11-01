@@ -47,8 +47,9 @@ public class Chas : MonoBehaviour
 
     void Update()
     {
+        anima.SetBool("Moving", isMoving);
 
-        if (agent.speed >= 0.01f)
+        if (agent.isStopped == false)
         {
             isMoving = true;
         }
