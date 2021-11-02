@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded;
     public float distToGround = 1f;
-    public float gravity = -9.81f;
+    public float gravity = 9.81f;
 
     public bool isTired;
     public bool isPressed;
@@ -22,28 +22,41 @@ public class PlayerMovement : MonoBehaviour
     public float staminaRegen = 15f;
 
     public bool faded = false;
+    public bool inWater = true;
 
     public Animator animate;
 
     public Slider Stam;
     public GameObject stambar;
 
-    public Transform groundCheck;
+    public GameObject water;
 
     public void Start()
     {
 
     }
 
-    public void FixedUpdate()
+    private void OnTriggerEnter(Collider other)
     {
-        if (Physics.Raycast(transform.position, Vector3.down, distToGround + 0.1f))
+        if (other.gameObject.tag == "Water")
         {
-            IsGrounded = true;
+            inWater = true;
         }
-        else
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Water")
         {
-            IsGrounded = false;
+            inWater = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Water")
+        {
+            inWater = false;
         }
     }
 
@@ -68,6 +81,15 @@ public class PlayerMovement : MonoBehaviour
         }
         Animations();
 
+        if (Physics.Raycast(transform.position, Vector3.down, distToGround))
+        {
+            IsGrounded = true;
+        }
+        else
+        {
+            IsGrounded = false;
+        }
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
@@ -78,11 +100,11 @@ public class PlayerMovement : MonoBehaviour
         
             if (IsGrounded == false)
             {
-                transform.Translate(Vector3.up * gravity * Time.deltaTime);
+                transform.Translate(Vector3.down * gravity * Time.deltaTime);
             }
             else
             {
-                transform.Translate(Vector3.up * 0 * Time.deltaTime);
+                transform.Translate(Vector3.down * 0 * Time.deltaTime);
             }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -93,17 +115,31 @@ public class PlayerMovement : MonoBehaviour
         {
             isPressed = false;
         }
-        if (isPressed == true && currentStamina >= 0)
+        if (isPressed == true && inWater == true)
+        {
+            speed = 5.2f;
+        }
+        else if (isPressed == true && inWater == false)
         {
             speed = 8f;
-            currentStamina -= Time.deltaTime * staminaUse;
         }
-        if (isPressed == false && currentStamina <= 100)
+        if (isPressed == false && inWater == true)
+        {
+            speed = 2.6f;
+        }
+        else if (isPressed == false && inWater == false)
         {
             speed = 4f;
+        }
+        if (currentStamina <= 100 && isPressed == false)
+        {
             currentStamina += Time.deltaTime * staminaRegen;
         }
-        if(isTired == true)
+        if (currentStamina >= 0 && isPressed == true)
+        {
+            currentStamina -= Time.deltaTime * staminaUse;
+        }
+        if (isTired == true)
         {
             speed = 4f;
         }

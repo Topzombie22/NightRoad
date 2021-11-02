@@ -11,6 +11,7 @@ TagManager:
   - End
   - Sound
   - MonsterKill
+  - Water
   layers:
   - Default
   - TransparentFX

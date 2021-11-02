@@ -69,7 +69,7 @@ Material:
     - _Specular: 0.1
     - _TessValue: 6
     - _WaterDepth: 0.99
-    - _WaterFalloff: -10
+    - _WaterFalloff: -1.5
     - _WaterSmoothness: 0.3
     - _WaterSpecular: 0.3
     - _WavesAmount: 8
@@ -79,7 +79,7 @@ Material:
     - _Color: {r: 0.4292453, g: 0.7559531, b: 1, a: 1}
     - _Color0: {r: 0, g: 0.6749488, b: 0.8088235, a: 0}
     - _Color1: {r: 0, g: 0.048731543, b: 0.22794023, a: 0}
-    - _DeepColor: {r: 0, g: 0.19355887, b: 0.2830189, a: 1}
+    - _DeepColor: {r: 0, g: 0.16037738, b: 0.040543478, a: 1}
     - _ShalowColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
