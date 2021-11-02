@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool faded = false;
 
+    public Animator animate;
+
     public Slider Stam;
     public GameObject stambar;
 
@@ -64,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         {
             stambar.GetComponent<Image>().CrossFadeAlpha(0, 1.0f, true);
         }
+        Animations();
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
@@ -112,6 +115,26 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             isTired = true;
+        }
+    }
+
+    void Animations()
+    {
+        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+        {
+            animate.SetBool("Moving", false);
+        }
+        else
+        {
+            animate.SetBool("Moving", true);
+        }
+        if (isPressed == true && currentStamina >= 0.0f)
+        {
+            animate.SetBool("Running", true);
+        }
+        else
+        {
+            animate.SetBool("Running", false);
         }
     }
 
