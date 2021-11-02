@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed = 12f;
 
+    private Vector3 playerVelocity;
+
     public bool IsGrounded;
     public float distToGround = 1f;
     public float gravity = 9.81f;
@@ -24,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     public float staminaUse = 20f;
     public float staminaRegen = 15f;
 
+    public Transform player;
+
     public bool faded = false;
     public bool inWater = false;
 
@@ -32,11 +36,13 @@ public class PlayerMovement : MonoBehaviour
     public Slider Stam;
     public GameObject stambar;
 
+    private Rigidbody rb;
+
     public GameObject water;
 
     public void Start()
     {
-
+        rb = GetComponent<Rigidbody>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -106,27 +112,32 @@ public class PlayerMovement : MonoBehaviour
         {
             IsGrounded = false;
         }
+        if (IsGrounded == false)
+        {
+            playerVelocity.y += gravity * Time.deltaTime;
+            controller.Move(playerVelocity * Time.deltaTime);
+        }
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
 
+
         Vector3 move = transform.right * x + transform.forward * z;
 
-        controller.Move(move * speed * Time.deltaTime);
-        
-            if (IsGrounded == false)
-            {
-                transform.Translate(Vector3.down * gravity * Time.deltaTime);
-            }
-            else
-            {
-                transform.Translate(Vector3.down * 0 * Time.deltaTime);
-            }
+        controller.Move(move * speed * Time.deltaTime);    
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetAxis("Horizontal") != 0)
         {
             isPressed = true;
+        }
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetAxis("Vertical") != 0)
+        {
+            isPressed = true;
+        }
+        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+        {
+            isPressed = false;
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
