@@ -65,7 +65,6 @@ public class KillState : MonoBehaviour
             audioS.Stop();
         }
         Endscrn.SetActive(true);
-        deathSong.Play();
         mainmenuBut.GetComponent<RawImage>().CrossFadeAlpha(0, 0.0f, true);
         restartBut.GetComponent<RawImage>().CrossFadeAlpha(0, 0.0f, true);
         Time.timeScale = 1;
@@ -73,6 +72,7 @@ public class KillState : MonoBehaviour
         gameovr.GetComponent<RawImage>().CrossFadeAlpha(0, 0.0f, true);
         gameovr.GetComponent<RawImage>().CrossFadeAlpha(1, 2.75f, false);
         yield return new WaitForSeconds(3.25f);
+        deathSong.Play();
         isfaded = true;
         yield return new WaitForSeconds(0.5f);
         mainmenuBut.GetComponent<RawImage>().CrossFadeAlpha(1, 3.0f, false);

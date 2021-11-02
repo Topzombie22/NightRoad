@@ -110,7 +110,7 @@ public class Chas : MonoBehaviour
 
         if (other.gameObject.tag == "Player" && alerted == false)
         {
-
+            chasingPlayer = true;
             agent.isStopped = true;
             agent.SetDestination(target.position);
             MonsterScream.Play();
@@ -122,94 +122,100 @@ public class Chas : MonoBehaviour
 
     void GotoNextPoint()
     {
-        if (PatrolZone == 1)
+        if (chasingPlayer == false)
         {
-            agent.destination = patrolPoints[destPoint].position;
+            
 
-            if (agent.remainingDistance < 0.5f)
+            if (PatrolZone == 1)
             {
-                WaitingForPatrol = true;
+                agent.destination = patrolPoints[destPoint].position;
+
+                if (agent.remainingDistance < 0.5f)
+                {
+                    WaitingForPatrol = true;
+                }
+
+                if (WaitingForPatrol == true)
+                {
+                    StartCoroutine(WaitForPatrol());
+                    WaitingForPatrol = false;
+                }
+
+                destPoint = destPoint + 1;
+
+                if (destPoint >= 4)
+                {
+                    destPoint = 0;
+                }
             }
 
-            if (WaitingForPatrol == true)
+            if (PatrolZone == 2)
             {
-                StartCoroutine(WaitForPatrol());
-                WaitingForPatrol = false;
+                agent.destination = patrolPoints[destPoint].position;
+
+                if (agent.remainingDistance < 0.5f)
+                {
+                    WaitingForPatrol = true;
+                }
+
+                if (WaitingForPatrol == true)
+                {
+                    StartCoroutine(WaitForPatrol());
+                    WaitingForPatrol = false;
+                }
+
+                destPoint = destPoint + 1;
+
+                if (destPoint <= 4)
+                {
+                    destPoint = 4;
+                }
+
+                if (destPoint >= 7)
+                {
+                    destPoint = 4;
+                }
             }
-
-            destPoint = destPoint + 1;
-
-            if (destPoint >= 4)
+            if (PatrolZone == 3)
             {
-                destPoint = 0;
-            }
-        }
+                agent.destination = patrolPoints[destPoint].position;
 
-        if (PatrolZone == 2)
-        {
-            agent.destination = patrolPoints[destPoint].position;
+                if (agent.remainingDistance < 0.5f)
+                {
+                    WaitingForPatrol = true;
+                }
 
-            if (agent.remainingDistance < 0.5f)
-            {
-                WaitingForPatrol = true;
-            }
+                if (WaitingForPatrol == true)
+                {
+                    StartCoroutine(WaitForPatrol());
+                    WaitingForPatrol = false;
+                }
 
-            if (WaitingForPatrol == true)
-            {
-                StartCoroutine(WaitForPatrol());
-                WaitingForPatrol = false;
-            }
+                destPoint = destPoint + 1;
 
-            destPoint = destPoint + 1;
+                if (destPoint <= 8)
+                {
+                    destPoint = 8;
+                }
 
-            if (destPoint <= 4)
-            {
-                destPoint = 4;
-            }
-
-            if (destPoint >= 7)
-            {
-                destPoint = 4;
-            }
-        }
-        if (PatrolZone == 3)
-        {
-            agent.destination = patrolPoints[destPoint].position;
-
-            if (agent.remainingDistance < 0.5f)
-            {
-                WaitingForPatrol = true;
-            }
-
-            if (WaitingForPatrol == true)
-            {
-                StartCoroutine(WaitForPatrol());
-                WaitingForPatrol = false;
-            }
-
-            destPoint = destPoint + 1;
-
-            if (destPoint <= 8)
-            {
-                destPoint = 8;
-            }
-
-            if (destPoint >= 12)
-            {
-                destPoint = 8;
+                if (destPoint >= 12)
+                {
+                    destPoint = 8;
+                }
             }
         }
     }
             IEnumerator Timer()
             {
-            yield return new WaitForSeconds(4);
+            agent.isStopped = true;
             anima.SetBool("alerted", true);
+            agent.speed = 6.0f;
+            yield return new WaitForSeconds(4);
             agent.isStopped = false;
             MonsterRunning.Play();
-            chasingPlayer = true;
             yield return new WaitForSeconds(2);
             agent.speed = 10.0f;
-    }
+            }
 
         IEnumerator Chasing()
         {
@@ -218,15 +224,15 @@ public class Chas : MonoBehaviour
             alerted = false;
             MonsterRunning.Stop();
             anima.SetBool("alerted", false);
-    }
+            agent.speed = 6.0f;
+        }
 
         IEnumerator WaitingSound()
         {
             agent.isStopped = true;
-            yield return new WaitForSeconds(2);
             agent.SetDestination(target.position);
+            yield return new WaitForSeconds(2);
             agent.isStopped = false;
-            agent.speed = 6.0f;
             yield return new WaitForSeconds(2);
             WaitingForPatrol = false;
         }
@@ -243,6 +249,5 @@ public class Chas : MonoBehaviour
             PatrolWaitTime = Random.Range(3, 11);
             yield return new WaitForSeconds(PatrolWaitTime);
             agent.isStopped = false;
-            agent.speed = 5.0f;
         }
     }
