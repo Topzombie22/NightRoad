@@ -59,16 +59,6 @@ public class Chas : MonoBehaviour
             isMoving = false;
         }
 
-        if (isMoving == true)
-        {
-
-        }
-        else
-        {
-
-        }
-
-
         if (chasingPlayer == true)
         {
             agent.SetDestination(target.position);

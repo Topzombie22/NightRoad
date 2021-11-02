@@ -137,18 +137,4 @@ public class PlayerMovement : MonoBehaviour
             animate.SetBool("Running", false);
         }
     }
-
-    IEnumerator Fatigue()
-    {
-            yield return new WaitForSeconds(1);
-            currentStamina = currentStamina - staminaUse;
-
-    }
-
-    IEnumerator Rest()
-    {
-        yield return new WaitForSeconds(1);
-        currentStamina = currentStamina + staminaRegen;
-    }
-
 }
