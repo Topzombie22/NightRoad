@@ -19,6 +19,7 @@ public class KillState : MonoBehaviour
     public Transform head;
     private AudioSource[] allAudioSources;
     public AudioSource Jumpscare;
+    public AudioSource deathSong;
     public bool isdead;
     public bool hasresetcolor;
     public bool isfaded;
@@ -33,7 +34,7 @@ public class KillState : MonoBehaviour
     {
         if (isfaded == true)
         {
-            gameovr.GetComponent<RawImage>().color = Color.Lerp(Color.red, Color.white, Mathf.PingPong(Time.time, 1));
+            gameovr.GetComponent<RawImage>().color = Color.Lerp(Color.red, Color.white, Mathf.PingPong(Time.time, 1.5f));
         }
     }
 
@@ -53,6 +54,7 @@ public class KillState : MonoBehaviour
         }
     }
 
+
     IEnumerator WaitForDeath()
     {
         yield return new WaitForSeconds(0.75f);
@@ -63,6 +65,7 @@ public class KillState : MonoBehaviour
             audioS.Stop();
         }
         Endscrn.SetActive(true);
+        deathSong.Play();
         mainmenuBut.GetComponent<RawImage>().CrossFadeAlpha(0, 0.0f, true);
         restartBut.GetComponent<RawImage>().CrossFadeAlpha(0, 0.0f, true);
         Time.timeScale = 1;

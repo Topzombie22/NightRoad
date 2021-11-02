@@ -42,6 +42,7 @@ public class Chas : MonoBehaviour
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
+        MonsterRunning.pitch = 0.5f;
         GotoNextPoint();
     }
 

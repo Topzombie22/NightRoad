@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class PlayerMovement : MonoBehaviour
     public float currentStamina = 100f;
     public float staminaUse = 20f;
     public float staminaRegen = 15f;
+
+    public bool faded = false;
+
+    public Slider Stam;
+    public GameObject stambar;
 
     public Transform groundCheck;
 
@@ -42,6 +48,22 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Stam.value = currentStamina;
+
+        if (Stam.value >= 100 && faded == false)
+        {
+            stambar.GetComponent<Image>().CrossFadeAlpha(0, 2.0f, true);
+            faded = true;
+        }
+        if (Stam.value <= 99 && Stam.value >= 1)
+        {
+            stambar.GetComponent<Image>().CrossFadeAlpha(1, 1.0f, true);
+            faded = false;
+        }
+        if(Stam.value <= 0)
+        {
+            stambar.GetComponent<Image>().CrossFadeAlpha(0, 1.0f, true);
+        }
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
@@ -70,20 +92,20 @@ public class PlayerMovement : MonoBehaviour
         }
         if (isPressed == true && currentStamina >= 0)
         {
-            speed = 6f;
+            speed = 8f;
             currentStamina -= Time.deltaTime * staminaUse;
         }
         if (isPressed == false && currentStamina <= 100)
         {
-            speed = 2f;
+            speed = 4f;
             currentStamina += Time.deltaTime * staminaRegen;
         }
         if(isTired == true)
         {
-            speed = 2f;
+            speed = 4f;
         }
         
-        if(currentStamina >= 15)
+        if(currentStamina >= 0 )
         {
             isTired = false;
         }

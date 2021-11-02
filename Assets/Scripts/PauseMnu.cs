@@ -11,10 +11,11 @@ public class PauseMnu : MonoBehaviour
     public GameObject optionScrn;
     public bool optionScrnOn = false;
     public GameObject gameOver;
+    private AudioSource[] allAudioSources;
 
     private void Start()
     {
-        
+        allAudioSources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
     }
 
 
@@ -22,6 +23,10 @@ public class PauseMnu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && pauseScrnOn == false && gameOver.GetComponent<KillState>().isdead == false)
         {
+            foreach (AudioSource audioS in allAudioSources)
+            {
+                audioS.Pause();
+            }
             Time.timeScale = 0;
             pauseScrn.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
@@ -30,6 +35,10 @@ public class PauseMnu : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && pauseScrnOn == true)
         {
+            foreach (AudioSource audioS in allAudioSources)
+            {
+                audioS.UnPause();
+            }
             Time.timeScale = 1;
             pauseScrn.SetActive(false);
             optionScrn.SetActive(false);
