@@ -17,12 +17,15 @@ public class PlayerMovement : MonoBehaviour
     public bool isTired;
     public bool isPressed;
 
+    public float overallSpeed;
+    public float RunningSpeedCap;
+    public float WalkingSpeedCap;
     public float currentStamina = 100f;
     public float staminaUse = 20f;
     public float staminaRegen = 15f;
 
     public bool faded = false;
-    public bool inWater = true;
+    public bool inWater = false;
 
     public Animator animate;
 
@@ -64,6 +67,20 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Stam.value = currentStamina;
+        overallSpeed = controller.velocity.magnitude;
+
+        if(overallSpeed >= 4.01f && isPressed == false)
+        {
+            overallSpeed = 4.0f;
+        }
+        if (overallSpeed >= 4.01f && isPressed == true && currentStamina <= 1)
+        {
+            overallSpeed = 4.0f;
+        }
+        if (overallSpeed >= 8.01f && isPressed == true)
+        {
+            overallSpeed = 8.0f;
+        }
 
         if (Stam.value >= 100 && faded == false)
         {
