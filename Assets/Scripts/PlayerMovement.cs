@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
         {
             overallSpeed = 4.0f;
         }
-        if (overallSpeed >= 4.01f && isPressed == true && currentStamina <= 1)
+        if (overallSpeed >= 4.01f && isPressed == true && isTired == true)
         {
             overallSpeed = 4.0f;
         }

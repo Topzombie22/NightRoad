@@ -108,7 +108,7 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
-    agentSlope: 25
+    agentSlope: 35
     agentClimb: 1
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: e76431da5f242124595284a24cf4027c, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 1790968b0aee88440908ba524f814d25, type: 2}
 --- !u!1 &5051632
 GameObject:
   m_ObjectHideFlags: 0
@@ -33023,6 +33023,9 @@ MonoBehaviour:
   gravity: 9.81
   isTired: 0
   isPressed: 0
+  overallSpeed: 0
+  RunningSpeedCap: 0
+  WalkingSpeedCap: 0
   currentStamina: 100
   staminaUse: 10
   staminaRegen: 15
