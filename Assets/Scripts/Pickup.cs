@@ -35,7 +35,7 @@ public class Pickup : MonoBehaviour
 
     void Update()
     {
-        if (Collectables == 3 && hasWaited == false)
+        if (Collectables == 5 && hasWaited == false)
 
         {
             Timer();
