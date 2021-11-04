@@ -12,9 +12,9 @@ public class LightTracker : MonoBehaviour
 	{
 		{
 			Vector3 position = target.position;
-			position.x = target.position.x;
-			position.y = 80;
-			position.z = target.position.z;
+			position.x = target.position.x - 50;
+			position.y = target.position.y - 1.15f;
+			position.z = target.position.z - 50;
 			transform.position = position;
 		}
 	}
