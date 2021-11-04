@@ -16,12 +16,24 @@ public class CollectablesSpawner : MonoBehaviour
     {
         SpawnLocation = Random.Range(0, 5);
         Wrench[SpawnLocation].SetActive(true);
-        SpawnLocation = NoRepetition;
+        NoRepetition = SpawnLocation;
         while (SpawnLocation == NoRepetition)
         {
             SpawnLocation = Random.Range(0, 5);
         }
-        Debug.Log("Finished");
+        NoRepetition2 = SpawnLocation;
+        Gear[SpawnLocation].SetActive(true);
+        while (SpawnLocation == NoRepetition2)
+        {
+            SpawnLocation = Random.Range(0, 5);
+            Debug.Log("Rolled");
+            while (SpawnLocation == NoRepetition)
+            {
+                SpawnLocation = Random.Range(0, 5);
+                Debug.Log("Rolledx2"); 
+            }
+        }
+        ScrewDriver[SpawnLocation].SetActive(true);
     }
 
     // Update is called once per frame
