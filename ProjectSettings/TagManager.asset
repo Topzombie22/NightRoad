@@ -12,6 +12,7 @@ TagManager:
   - Sound
   - MonsterKill
   - Water
+  - Truck
   layers:
   - Default
   - TransparentFX
