@@ -200,5 +200,13 @@ public class PlayerMovement : MonoBehaviour
         {
             animate.SetBool("Running", false);
         }
+        if (inWater == true)
+        {
+            animate.SetBool("IsWet", true);
+        }
+        else
+        {
+            animate.SetBool("IsWet", false);
+        }
     }
 }
