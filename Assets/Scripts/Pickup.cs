@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Pickup : MonoBehaviour
 {
@@ -15,21 +16,31 @@ public class Pickup : MonoBehaviour
     public GameObject winGate;
     public bool hasWaited;
     public bool LookingAt;
+    public bool Pickuplearned;
+
+    private void Start()
+    {
+        pickText.GetComponent<Text>().CrossFadeAlpha(0, 0.0f, true);
+    }
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Collectables" && Collectables < 1)
+        if (Pickuplearned == false)
         {
-            pickText.SetActive(true);
-            Debug.Log("Step 2");
-            if (Input.GetKey(KeyCode.E))
+            pickText.GetComponent<Text>().CrossFadeAlpha(1, 4.0f, true);
+            if (Pickuplearned == true)
             {
-                Destroy(other.gameObject);
-                Collectables = Collectables + 1;
-                pickNoise.Play();
-                pickText.SetActive(false);
-
+                pickText.GetComponent<Text>().CrossFadeAlpha(0, 2.0f, true);
             }
+
+        }
+
+        if (other.gameObject.tag == "Collectables" && Collectables < 1 && Input.GetKey(KeyCode.E))
+        {
+            Debug.Log("Step 2");
+            Destroy(other.gameObject);
+            Collectables = Collectables + 1;
+            pickNoise.Play();
         }
 
         if (other.gameObject.tag == "Truck" && Collectables < 1)
@@ -41,12 +52,12 @@ public class Pickup : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        pickText.SetActive(false);
+        pickText.GetComponent<Text>().CrossFadeAlpha(0, 1.0f, true);
     }
 
     void Update()
     {
-        
+
     }
 
     IEnumerator Timer() 
@@ -55,6 +66,12 @@ public class Pickup : MonoBehaviour
         yield return new WaitForSeconds(5);
         hasWaited = true;
 
+    }
+
+    IEnumerator LeaningTimer()
+    {
+        yield return new WaitForSeconds(4);
+        Pickuplearned = true;
     }
 
 }
