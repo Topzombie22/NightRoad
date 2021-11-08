@@ -14,7 +14,7 @@ public class Pickup : MonoBehaviour
     public GameObject alreadyHaveText;
     public GameObject needText;
     public GameObject winGate;
-    public bool hasWaited = true;
+    public bool hasWaited;
     public bool LookingAt;
     public bool Pickuplearned;
 
@@ -41,6 +41,7 @@ public class Pickup : MonoBehaviour
             Destroy(other.gameObject);
             Collectables = Collectables + 1;
             pickNoise.Play();
+            StartCoroutine(WaitedTooMany());
         }
 
         if (other.gameObject.tag == "Collectables" && Collectables >= 1 && hasWaited == true)
@@ -54,6 +55,7 @@ public class Pickup : MonoBehaviour
             StartCoroutine(FadeLeadToShacks());
             Collectables = Collectables - 1;
             TruckProgress = TruckProgress + 1;
+            hasWaited = false;
         }
     }
 
