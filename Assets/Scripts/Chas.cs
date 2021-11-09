@@ -33,6 +33,7 @@ public class Chas : MonoBehaviour
     public int destPoint = 0;
 
     public bool alerted;
+    public bool isKilled;
 
     Transform target;
     NavMeshAgent agent;
@@ -143,7 +144,7 @@ public class Chas : MonoBehaviour
 
     void GotoNextPoint()
     {
-        if (chasingPlayer == false)
+        if (chasingPlayer == false && alerted == false)
         {
             
 
@@ -329,7 +330,14 @@ public class Chas : MonoBehaviour
 
         if (chasingPlayer == true)
         {
-            agent.isStopped = false;
+            if (isKilled == false)
+            {
+                agent.isStopped = false;
+            }
+            if (isKilled == true)
+            {
+                agent.isStopped = true;
+            }
             agent.SetDestination(target.position);
             MonsterRunning.Play();
             waitTime = 100.0f;
