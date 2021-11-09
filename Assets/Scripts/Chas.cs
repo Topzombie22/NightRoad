@@ -182,7 +182,7 @@ public class Chas : MonoBehaviour
                     destPoint = 4;
                 }
 
-                if (destPoint >= 7)
+                if (destPoint >= 8)
                 {
                     destPoint = 4;
                 }
@@ -231,14 +231,14 @@ public class Chas : MonoBehaviour
 
                 destPoint = destPoint + 1;
 
-                if (destPoint <= 11)
+                if (destPoint <= 12)
                 {
-                    destPoint = 8;
+                    destPoint = 12;
                 }
 
-                if (destPoint >= 12)
+                if (destPoint >= 16)
                 {
-                    destPoint = 8;
+                    destPoint = 12;
                 }
             }
             if (PatrolZone == 5)
@@ -258,14 +258,14 @@ public class Chas : MonoBehaviour
 
                 destPoint = destPoint + 1;
 
-                if (destPoint <= 8)
+                if (destPoint <= 16)
                 {
-                    destPoint = 8;
+                    destPoint = 16;
                 }
 
-                if (destPoint >= 12)
+                if (destPoint >= 20)
                 {
-                    destPoint = 8;
+                    destPoint = 16;
                 }
             }
             if (PatrolZone == 6)
@@ -285,14 +285,14 @@ public class Chas : MonoBehaviour
 
                 destPoint = destPoint + 1;
 
-                if (destPoint <= 8)
+                if (destPoint <= 20)
                 {
-                    destPoint = 8;
+                    destPoint = 20;
                 }
 
-                if (destPoint >= 12)
+                if (destPoint >= 24)
                 {
-                    destPoint = 8;
+                    destPoint = 20;
                 }
             }
         }
