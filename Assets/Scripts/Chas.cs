@@ -13,6 +13,9 @@ public class Chas : MonoBehaviour
     public Transform PatrolAreaOne;
     public Transform PatrolAreaTwo;
     public Transform PatrolAreaThree;
+    public Transform PatrolAreaFour;
+    public Transform PatrolAreaFive;
+    public Transform PatrolAreaSix;
 
     public bool WaitingForPatrol = false;
     public int PatrolZone;
@@ -21,6 +24,9 @@ public class Chas : MonoBehaviour
     public float distPatrolOne;
     public float distPatrolTwo;
     public float distPatrolThree;
+    public float distPatrolFour;
+    public float distPatrolFive;
+    public float distPatrolSix;
 
     public Transform[] patrolPoints;
     public int destPoint = 0;
@@ -73,18 +79,33 @@ public class Chas : MonoBehaviour
         distPatrolOne = Vector3.Distance(target.position, PatrolAreaOne.position);
         distPatrolTwo = Vector3.Distance(target.position, PatrolAreaTwo.position);
         distPatrolThree = Vector3.Distance(target.position, PatrolAreaThree.position);
+        distPatrolFour = Vector3.Distance(target.position, PatrolAreaFour.position);
+        distPatrolFive = Vector3.Distance(target.position, PatrolAreaFive.position);
+        distPatrolSix = Vector3.Distance(target.position, PatrolAreaSix.position);
 
-        if (distPatrolOne < distPatrolTwo && distPatrolOne < distPatrolThree)
+        if (distPatrolOne < distPatrolTwo && distPatrolOne < distPatrolThree && distPatrolOne < distPatrolFour && distPatrolOne < distPatrolFive && distPatrolOne < distPatrolSix)
         {
             PatrolZone = 1;
         }
-        if (distPatrolTwo < distPatrolOne && distPatrolTwo < distPatrolThree)
+        if (distPatrolTwo < distPatrolOne && distPatrolTwo < distPatrolThree && distPatrolTwo < distPatrolFour && distPatrolTwo < distPatrolFive && distPatrolTwo < distPatrolSix)
         {
             PatrolZone = 2;
         }
-        if (distPatrolThree < distPatrolOne && distPatrolThree < distPatrolTwo)
+        if (distPatrolThree < distPatrolOne && distPatrolThree < distPatrolTwo && distPatrolThree < distPatrolFour && distPatrolThree < distPatrolFive && distPatrolThree < distPatrolSix)
         {
             PatrolZone = 3;
+        }
+        if (distPatrolFour < distPatrolOne && distPatrolFour < distPatrolTwo && distPatrolFour < distPatrolThree && distPatrolFour < distPatrolFive && distPatrolFour < distPatrolSix)
+        {
+            PatrolZone = 4;
+        }
+        if (distPatrolFive < distPatrolOne && distPatrolFive < distPatrolTwo && distPatrolFive < distPatrolThree && distPatrolFive < distPatrolFour && distPatrolFive < distPatrolSix)
+        {
+            PatrolZone = 5;
+        }
+        if (distPatrolSix < distPatrolOne && distPatrolSix < distPatrolTwo && distPatrolSix < distPatrolThree && distPatrolSix < distPatrolFour && distPatrolSix < distPatrolFive)
+        {
+            PatrolZone = 6;
         }
     }
 
@@ -167,6 +188,87 @@ public class Chas : MonoBehaviour
                 }
             }
             if (PatrolZone == 3)
+            {
+                agent.destination = patrolPoints[destPoint].position;
+
+                if (agent.remainingDistance < 0.5f)
+                {
+                    WaitingForPatrol = true;
+                }
+
+                if (WaitingForPatrol == true)
+                {
+                    StartCoroutine(WaitForPatrol());
+                    WaitingForPatrol = false;
+                }
+
+                destPoint = destPoint + 1;
+
+                if (destPoint <= 8)
+                {
+                    destPoint = 8;
+                }
+
+                if (destPoint >= 12)
+                {
+                    destPoint = 8;
+                }
+            }
+            if (PatrolZone == 4)
+            {
+                agent.destination = patrolPoints[destPoint].position;
+
+                if (agent.remainingDistance < 0.5f)
+                {
+                    WaitingForPatrol = true;
+                }
+
+                if (WaitingForPatrol == true)
+                {
+                    StartCoroutine(WaitForPatrol());
+                    WaitingForPatrol = false;
+                }
+
+                destPoint = destPoint + 1;
+
+                if (destPoint <= 11)
+                {
+                    destPoint = 8;
+                }
+
+                if (destPoint >= 12)
+                {
+                    destPoint = 8;
+                }
+            }
+            if (PatrolZone == 5)
+            {
+                agent.destination = patrolPoints[destPoint].position;
+
+                if (agent.remainingDistance < 0.5f)
+                {
+                    WaitingForPatrol = true;
+                }
+
+                if (WaitingForPatrol == true)
+                {
+                    StartCoroutine(WaitForPatrol());
+                    WaitingForPatrol = false;
+                }
+
+                destPoint = destPoint + 1;
+
+                if (destPoint <= 8)
+                {
+                    destPoint = 8;
+                }
+
+                if (destPoint >= 12)
+                {
+                    destPoint = 8;
+                }
+            }
+            if (PatrolZone == 6)
             {
                 agent.destination = patrolPoints[destPoint].position;
 
