@@ -68,7 +68,7 @@ public class Chas : MonoBehaviour
 
     void Update()
     {
-        anima.SetBool("Moving", isMoving);
+        animations();
 
         if (agent.isStopped == false)
         {
@@ -317,12 +317,10 @@ public class Chas : MonoBehaviour
             boxCol.enabled = false;
             agent.isStopped = true;
             MonsterScream.Play();
-            anima.SetBool("alerted", alerted);
             waitTime = waitTime - waitRate * Time.deltaTime;
 
             if (waitTime <= 0)
             {
-                anima.SetBool("alerted", alerted);
                 chaseTime = 100.0f;
                 chasingPlayer = true;
             }
@@ -371,8 +369,16 @@ public class Chas : MonoBehaviour
                 agent.isStopped = false;
                 visionTime = 100.0f;
                 isBlind = false;
+                GotoNextPoint();
             }
         }
+    }
+
+    void animations()
+    {
+        anima.SetBool("Blind", isBlind);
+        anima.SetBool("alerted", alerted);
+        anima.SetBool("Moving", isMoving);
     }
 
         IEnumerator WaitingSound()
