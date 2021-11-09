@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Chas : MonoBehaviour
 {
+    BoxCollider boxCol;
 
     public AudioSource MonsterScream;
     public AudioSource MonsterRunning;
@@ -40,11 +41,23 @@ public class Chas : MonoBehaviour
     public int cycle = 3;
     public bool chasingPlayer;
     public bool isMoving;
+    public bool isBlind;
+
+    public float chaseTime = 100.0f;
+    private float chaseRate = 12.5f;
+
+    public float waitTime = 100.0f;
+    private float waitRate = 25.0f;
+
+    public float visionTime = 100.0f;
+    private float visionRate = 25.0f;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        boxCol = GetComponent<BoxCollider>();
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
@@ -71,7 +84,10 @@ public class Chas : MonoBehaviour
         }
 
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        {
             GotoNextPoint();
+        }
+        Chasing();
     }
 
     void FixedUpdate()
@@ -121,13 +137,7 @@ public class Chas : MonoBehaviour
 
         if (other.gameObject.tag == "Player" && alerted == false)
         {
-            chasingPlayer = true;
-            agent.isStopped = true;
-            agent.SetDestination(target.position);
-            MonsterScream.Play();
-            StartCoroutine(Timer());
             alerted = true;
-            StartCoroutine(Chasing());
         }
     }
 
@@ -297,27 +307,65 @@ public class Chas : MonoBehaviour
             }
         }
     }
-            IEnumerator Timer()
-            {
+
+    public void Chasing()
+    {
+        if (alerted == true)
+        {
+            agent.SetDestination(target.position);
+            boxCol.enabled = false;
             agent.isStopped = true;
-            anima.SetBool("alerted", true);
-            agent.speed = 6.0f;
-            yield return new WaitForSeconds(4);
+            MonsterScream.Play();
+            anima.SetBool("alerted", alerted);
+            waitTime = waitTime - waitRate * Time.deltaTime;
+
+            if (waitTime <= 0)
+            {
+                anima.SetBool("alerted", alerted);
+                chaseTime = 100.0f;
+                chasingPlayer = true;
+            }
+        }
+
+        if (chasingPlayer == true)
+        {
             agent.isStopped = false;
+            agent.SetDestination(target.position);
             MonsterRunning.Play();
-            yield return new WaitForSeconds(2);
-            agent.speed = 10.0f;
+            waitTime = 100.0f;
+            chaseTime = chaseTime - chaseRate * Time.deltaTime;
+            if (chaseTime >= 60.0f)
+            {
+                agent.speed = 6.0f;
+            }
+            if (chaseTime <= 59.99f)
+            {
+                agent.speed = 12.0f;
+            }
+            if (chaseTime <= 0.0f)
+            {
+                chaseTime = 100.0f;
+                agent.isStopped = true;
+                chasingPlayer = false;
+                isBlind = true;
+                alerted = false;
             }
 
-        IEnumerator Chasing()
-        {
-            yield return new WaitForSeconds(10);
-            chasingPlayer = false;
-            alerted = false;
-            MonsterRunning.Stop();
-            anima.SetBool("alerted", false);
-            agent.speed = 6.0f;
         }
+        if (isBlind == true)
+        {
+            boxCol.enabled = false;
+            visionTime = visionTime - visionRate * Time.deltaTime;
+
+            if (visionTime <= 0.0f)
+            {
+                boxCol.enabled = true;
+                agent.isStopped = false;
+                visionTime = 100.0f;
+                isBlind = false;
+            }
+        }
+    }
 
         IEnumerator WaitingSound()
         {
@@ -342,4 +390,4 @@ public class Chas : MonoBehaviour
             yield return new WaitForSeconds(PatrolWaitTime);
             agent.isStopped = false;
         }
-    }
+}

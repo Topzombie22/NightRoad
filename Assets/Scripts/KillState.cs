@@ -42,6 +42,7 @@ public class KillState : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            agent.speed = 0.0f;
             isdead = true;
             Jumpscare.Play();
             Destroy(cam.GetComponent<MouseLook>());
