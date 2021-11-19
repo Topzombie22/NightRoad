@@ -69,7 +69,16 @@ public class Pickup : MonoBehaviour
 
     void Update()
     {
+        GameFinsihed();
+    }
 
+    void GameFinsihed()
+    {
+        if (TruckProgress >= 3)
+        {
+            winGate.SetActive(true);
+            Time.timeScale = 0;
+        }
     }
 
     IEnumerator FadeLeadToTruck() 
