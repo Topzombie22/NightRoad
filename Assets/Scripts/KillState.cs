@@ -13,6 +13,8 @@ public class KillState : MonoBehaviour
     public GameObject Endscrn;
     public GameObject Monster;
     public Animator anima;
+    public GameObject Map;
+    public GameObject wintext;
     public GameObject player;
     public GameObject cam;
     public Transform lookatplay;
@@ -53,6 +55,8 @@ public class KillState : MonoBehaviour
             Monster.transform.LookAt(lookatplay);
             anima.SetBool("caught", true);
             StartCoroutine(WaitForDeath());
+            wintext.SetActive(false);
+            Map.SetActive(false);
         }
     }
 

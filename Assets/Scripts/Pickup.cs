@@ -14,6 +14,8 @@ public class Pickup : MonoBehaviour
     public GameObject alreadyHaveText;
     public GameObject needText;
     public GameObject winGate;
+    public GameObject loseText;
+    public GameObject map;
     public bool hasWaited;
     public bool LookingAt;
     public bool Pickuplearned;
@@ -76,7 +78,12 @@ public class Pickup : MonoBehaviour
     {
         if (TruckProgress >= 3)
         {
+            loseText.SetActive(false);
             winGate.SetActive(true);
+            map.SetActive(false);
+
+            Cursor.lockState = CursorLockMode.None;
+
             Time.timeScale = 0;
         }
     }
