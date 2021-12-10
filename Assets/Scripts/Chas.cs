@@ -316,8 +316,12 @@ public class Chas : MonoBehaviour
             agent.SetDestination(target.position);
             boxCol.enabled = false;
             agent.isStopped = true;
-            MonsterScream.Play();
             waitTime = waitTime - waitRate * Time.deltaTime;
+
+            if (waitTime < 99 && waitTime > 90)
+            {
+                MonsterScream.Play();
+            }
 
             if (waitTime <= 0)
             {
@@ -337,11 +341,11 @@ public class Chas : MonoBehaviour
                 agent.isStopped = true;
             }
             agent.SetDestination(target.position);
-            MonsterRunning.Play();
             waitTime = 100.0f;
             chaseTime = chaseTime - chaseRate * Time.deltaTime;
             if (chaseTime >= 60.0f)
             {
+                MonsterRunning.Play();
                 agent.speed = 6.0f;
             }
             if (chaseTime <= 59.99f)
@@ -369,6 +373,7 @@ public class Chas : MonoBehaviour
                 agent.isStopped = false;
                 visionTime = 100.0f;
                 isBlind = false;
+                MonsterRunning.Stop();
                 GotoNextPoint();
             }
         }
